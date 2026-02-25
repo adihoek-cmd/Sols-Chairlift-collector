@@ -592,8 +592,9 @@ function tapItem(item){
   const type=item.type;
 
   if(type.trap){
-    // Traps: deduct points but NEVER affect combo
+    // Traps: deduct points and break combo when TAPPED
     score=Math.max(0,score+type.pts);
+    combo=0; comboTimer=0;
     sfxTrap();
     spawnRing(item.x,item.y,item.sz,true);
     spawnFloat(`${type.pts}`,item.x,item.y,false,true);
