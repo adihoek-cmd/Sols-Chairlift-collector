@@ -817,7 +817,12 @@ function loop(now){
     item.y+=gameSpeed*1.08;item.el.style.top=`${item.y}px`;
     if(item.y>bot+item.sz){
       // Only reset combo for missed COLLECTIBLES (not traps, not power-ups, not iPhone)
-      if(!item.type.trap&&!item.type.powerup&&!item.type.isPhone){sfxWhoosh();combo=0;}
+      if(item.type.trap||item.type.powerup){
+        // Trap/power-up scrolled off safely — refresh comboTimer so the streak doesn't decay
+        if(combo>0) comboTimer=2;
+      } else if(!item.type.isPhone){
+        sfxWhoosh();combo=0;
+      }
       item.alive=false;item.el.remove();return false;
     }
     return true;
