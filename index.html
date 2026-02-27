@@ -653,7 +653,7 @@ function tapItem(item){
   item.alive=false;
   const type=item.type;
 
-  if(type.trap){
+  if(type.trap && !type.isPhone){
     // Traps: deduct points and break combo when TAPPED
     score=Math.max(0,score+type.pts);
     combo=0; comboTimer=0;
@@ -816,8 +816,8 @@ function loop(now){
     if(!item.alive)return false;
     item.y+=gameSpeed*1.08;item.el.style.top=`${item.y}px`;
     if(item.y>bot+item.sz){
-      // Only reset combo for missed COLLECTIBLES (not traps, not power-ups)
-      if(!item.type.trap&&!item.type.powerup){sfxWhoosh();combo=0;}
+      // Only reset combo for missed COLLECTIBLES (not traps, not power-ups, not iPhone)
+      if(!item.type.trap&&!item.type.powerup&&!item.type.isPhone){sfxWhoosh();combo=0;}
       item.alive=false;item.el.remove();return false;
     }
     return true;
